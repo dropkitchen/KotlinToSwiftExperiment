@@ -18,23 +18,24 @@ struct ContentView: View {
             }
     }
 
+    // With CommonFlow approach
     private func getCatFactWithCommonFlow() {
-        let catFact = catFactClient.getCatFactWithCommonFlow()
-        catFact.subscribe(onCollect: { catFact in
-
+        let _ = catFactClient.getCatFactWithCommonFlow().subscribe(onCollect: { catFact in
+            print(catFact as Any)
         })
     }
 
-    // With SKIE
+    // With SKIE approach
     private func getCatFactWithFlow() {
-        let catFact = catFactClient.getCatFactWithFlow()
+        let _ = catFactClient.getCatFactWithFlow().map { catFact in
+            print(catFact)
+        }
     }
 
+    // Simple suspend function
     @MainActor
     private func getCatFactWithSuspend() async throws -> CatFact {
-        
         let catFact = try await catFactClient.getCatFactWithSuspend()
-
         return catFact
     }
 }
